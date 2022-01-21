@@ -1,24 +1,26 @@
-const dbConfig = require("../db.config.js");
+//const dbConfig = require("../db.config.js");
 
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
-  operatorsAliases: false,
+const { Sequelize } = require('sequelize');
+const sequelize = new Sequelize('postgres://postgres:Pass2020!:5432/messagerdatabase');
 
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle
-  }
-});
+// const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+//   host: dbConfig.HOST,
+//   dialect: dbConfig.dialect,
+//   operatorsAliases: false,
 
-const db = {};
+//   pool: {
+//     max: dbConfig.pool.max,
+//     min: dbConfig.pool.min,
+//     acquire: dbConfig.pool.acquire,
+//     idle: dbConfig.pool.idle
+//   }
+// });
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+// const db = {};
 
-db.message = require("./message.js")(sequelize, Sequelize);
+// db.Sequelize = Sequelize;
+// db.sequelize = sequelize;
 
-module.exports = db;
+// db.message = require("./message.js")(sequelize, Sequelize);
+
+module.exports = sequelize;

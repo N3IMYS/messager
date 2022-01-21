@@ -1,6 +1,6 @@
+const sequelize = require("./models/index.js");
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
 
 var corsOptions = {
@@ -9,19 +9,24 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-const db = require("./models/index.js");
-db.sequelize.sync();
 
 // parse requests of content-type - application/json
 app.use(express.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
-//app.use(express.urlencoded({ extended: true }));
-
-// simple route
 
 
+async function checkDbConnection(){
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
+
+await checkDbConnection();
 const MessageController = require('./controllers/messageController');
+const { response } = require("express");
 app.use('/api', MessageController);
 
 // set port, listen for requests
